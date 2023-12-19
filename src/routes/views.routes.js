@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { usersManager } from "../managers/usersManager.js";
+import { usersManager } from "../persistencia/DAOs/mongoDAO/usersManager.js";
 import { productsManager } from "../managers/productsManager.js";
 
 const router = Router();

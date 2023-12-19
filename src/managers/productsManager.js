@@ -1,4 +1,4 @@
-import { productsModel } from "../db/models/products.model.js";
+import { productsModel } from "../persistencia/db/models/products.model.js";
 import BasicManager from "./basicManager.js";
 
 class ProductsManager extends BasicManager {

@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { hashData, compareData } from "../utils.js";
 
-import { usersManager } from "../managers/usersManager.js";
+import { usersManager } from "../persistencia/DAOs/mongoDAO/usersManager.js";
 import { cartsManager } from "../managers/cartsManager.js";
 
 const router = Router();

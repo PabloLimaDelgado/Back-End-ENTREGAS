@@ -3,7 +3,7 @@ import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import { Strategy as LocalStrategy } from "passport-local";
 
-import { usersManager } from "./managers/usersManager.js";
+import { usersManager } from "./persistencia/DAOs/mongoDAO/usersManager.js";
 import { cartsManager } from "./managers/cartsManager.js";
 
 import config from "./config.js";
@@ -46,7 +46,6 @@ passport.use(
       usernameField: "email",
     },
     async (email, password, done) => {
-
       try {
         const userDB = await usersManager.findByEmail(email);
         if (!userDB) {

@@ -11,8 +11,9 @@ import usersRouter from "./routes/users.routes.js";
 import productsRouter from "./routes/products.routes.js";
 import cartsRouter from "./routes/carts.routes.js";
 import sessionsRouter from "./routes/sessions.routes.js";
+import currentRouter from "./routes/current.routes.js";
 
-import "./db/configDB.js";
+import "./persistencia/db/configDB.js";
 import "./passport.js";
 import { __dirname } from "./utils.js";
 
@@ -46,6 +47,8 @@ app.use("/api/products", productsRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/carts", cartsRouter);
 app.use("/api/sessions", sessionsRouter);
+app.use("/api/current", currentRouter);
+
 app.listen(8080, () => {
   console.log("Server is running on port 8080");
 });

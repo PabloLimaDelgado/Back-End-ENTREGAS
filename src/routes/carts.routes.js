@@ -51,4 +51,40 @@ router.post("/:idCart/products/:idProduct", async (req, res) => {
   }
 });
 
+router.post("/:cid/purchase", async (req, res) => {
+  const cartId = req.params.cid;
+
+  try {
+    const cart = await cartsManager.findById(cartId).populate("products.product")
+
+    if (!cart) {
+      return res.status(404).json({ message: "Cart not found" });
+    }
+
+    const productsToPurchase = cart.products;
+
+    for (const productItem of productsToPurchase) {
+      const product = productItem.product;
+      const requestedQuantity = productItem.quantity;
+
+      if (product.stock >= requestedQuantity) {
+        product.stock -= requestedQuantity;
+        await product.save();
+      } else {
+        return res
+          .status(400)
+          .json({ message: `Insufficient stock for product ${product.name}` });
+      }
+    }
+
+    cart.products = [];
+    await cart.save();
+
+    res.status(200).json({ message: "Purchase successful" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
 export default router;
