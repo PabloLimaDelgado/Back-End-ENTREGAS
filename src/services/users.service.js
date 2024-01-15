@@ -25,3 +25,43 @@ export const createOne = (obj) => {
 
   return response;
 };
+
+export const modifyProduct = async (productId, newData, user) => {
+  const product = await productsModel.findById(productId);
+
+  if (!product) {
+    throw new Error("Producto no encontrado");
+  }
+
+  // Verificar permisos
+  if (
+    user.rol === "admin" ||
+    (user.rol === "premium" && product.owner === user.email)
+  ) {
+    // Permitir la modificación
+    await productsModel.updateOne({ _id: productId }, newData);
+    return "Producto modificado exitosamente";
+  } else {
+    throw new Error("No tienes permisos para modificar este producto");
+  }
+};
+
+export const deleteProduct = async (productId, user) => {
+  const product = await productsModel.findById(productId);
+
+  if (!product) {
+    throw new Error("Producto no encontrado");
+  }
+
+  // Verificar permisos
+  if (
+    user.rol === "admin" ||
+    (user.rol === "premium" && product.owner === user.email)
+  ) {
+    // Permitir la eliminación
+    await productsModel.deleteOne({ _id: productId });
+    return "Producto eliminado exitosamente";
+  } else {
+    throw new Error("No tienes permisos para eliminar este producto");
+  }
+};

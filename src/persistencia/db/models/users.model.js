@@ -28,9 +28,11 @@ const usersSchema = new Schema({
   },
   rol: {
     type: String,
-    enum: ["admin", "user"],
+    enum: ["admin", "user", "premium"],
     default: "user",
   },
+  resetPasswordToken: String,
+  resetPasswordExpires: Date,
 });
 
 export const usersModel = model("Users", usersSchema);
